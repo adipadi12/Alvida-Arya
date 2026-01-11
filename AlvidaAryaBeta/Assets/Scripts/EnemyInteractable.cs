@@ -6,9 +6,7 @@ public class EnemyInteractable : MonoBehaviour, IInteractables
     public void Interact()
     {
         Debug.Log("Interacted with " + gameObject.name);
-        // Add interaction logic here (e.g., attack enemy, etc.)
         TakeDamage(20);
-        FindAnyObjectByType<PlayerInteraction>().GetComponent<Renderer>().material.color = Color.red;
     }
 
     private void TakeDamage(int damage)
@@ -25,5 +23,7 @@ public class EnemyInteractable : MonoBehaviour, IInteractables
     {
         Debug.Log(gameObject.name + " died.");
         Destroy(FindAnyObjectByType<PlayerInteraction>().gameObject);
+        GameManager.Instance.SetState(GameState.GameOver); // when dying we set the game state to GameOver
+        Debug.Log("Game Over!");
     }
 }
