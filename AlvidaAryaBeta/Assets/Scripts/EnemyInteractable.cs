@@ -1,29 +1,32 @@
+using System;
 using UnityEngine;
 
 public class EnemyInteractable : MonoBehaviour, IInteractables
 {
 
+    [SerializeField] private int damageToPlayer = 20;
+    [SerializeField] private int scoreOnKill = 20;
     public void Interact()
     {
         Debug.Log("Interacted with " + gameObject.name);
-        TakeDamage(20);
+        Killed();
     }
 
-    private void TakeDamage(int damage)
+    private void OnTriggerEnter(Collider other) // i use trigger instead of collision to avoid expensive physics on mobile
     {
-        PlayerInteraction.Instance.health -= damage;
-        Debug.Log(gameObject.name + " took " + damage + " damage. Remaining health: " + PlayerInteraction.Instance.health);
-        if (PlayerInteraction.Instance.health <= 0)
+        if(!other.CompareTag("Player"))
         {
-            Die();
+            return;
         }
+
+        PlayerInteraction.Instance.health -= damageToPlayer;
+        Debug.Log("Player hit by " + gameObject.name + ". Health reduced by " + damageToPlayer);
     }
 
-    private void Die()
+    private void Killed()
     {
-        Debug.Log(gameObject.name + " died.");
-        Destroy(FindAnyObjectByType<PlayerInteraction>().gameObject);
-        GameManager.Instance.SetState(GameState.GameOver); // when dying we set the game state to GameOver
-        Debug.Log("Game Over!");
+        Debug.Log(gameObject.name + " Killed.");
+        PlayerInteraction.Instance.score += scoreOnKill;
+        gameObject.SetActive(false);
     }
 }

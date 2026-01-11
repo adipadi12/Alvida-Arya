@@ -33,5 +33,6 @@ public class UIManager : MonoBehaviour
     public void OnRestartPressed()
     {
         SceneManager.LoadScene(0);
+        EnemySpawner.Instance.ResetSpawner();
     }
 }

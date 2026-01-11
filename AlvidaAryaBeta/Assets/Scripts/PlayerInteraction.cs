@@ -27,6 +27,8 @@ public class PlayerInteraction : MonoBehaviour
         ScoreUpdate();
 
         HealthUpdate();
+
+        CheckForDeath();
     }
 
     private void InteractionStart()
@@ -49,6 +51,16 @@ public class PlayerInteraction : MonoBehaviour
                     interactables.Interact(); 
                 }
             }
+        }
+    }
+
+    private void CheckForDeath()
+    {
+        if(health <= 0)
+        {
+            Debug.Log("Player Dead.");
+            GameManager.Instance.SetState(GameState.GameOver);
+            Destroy(this.gameObject);
         }
     }
     private void ScoreUpdate()
