@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
         UpdateUI(GameManager.Instance.CurrentState);
     }
 
-    private void UpdateUI(GameState state)
+    private void UpdateUI(GameState state) // UI update based on game state instead of polling every frame
     {
         // sets the panel active based on the current game state
         menuPanel.SetActive(state == GameState.MainMenu);
@@ -32,7 +32,8 @@ public class UIManager : MonoBehaviour
 
     public void OnRestartPressed()
     {
-        SceneManager.LoadScene(0);
-        EnemySpawner.Instance.ResetSpawner();
+        PlayerInteraction.Instance.ResetPlayer();
+        FindAnyObjectByType<EnemySpawner>().ResetSpawner();
+        GameManager.Instance.SetState(GameState.MainMenu);
     }
 }

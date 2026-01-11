@@ -20,7 +20,7 @@ public class PlayerInteraction : MonoBehaviour
         }
         Instance = this;
     }
-    void Update()
+    void Update() // interface based interaction to decouple player logic from other interactable objects
     {
         InteractionStart();
 
@@ -60,9 +60,19 @@ public class PlayerInteraction : MonoBehaviour
         {
             Debug.Log("Player Dead.");
             GameManager.Instance.SetState(GameState.GameOver);
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
     }
+
+    public void ResetPlayer()
+    {
+        health = 100;
+        score = 0;
+        ScoreUpdate();
+        HealthUpdate();
+        gameObject.SetActive(true);
+    }
+
     private void ScoreUpdate()
     {
         scoreText.text = "Score: " + score;

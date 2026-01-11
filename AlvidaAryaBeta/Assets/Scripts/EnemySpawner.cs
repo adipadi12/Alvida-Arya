@@ -42,7 +42,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void CreatePool()
+    private void CreatePool() // avoided runtime instantiation and destroy calls by pooling enemies for mobile performance
     {
         for (int i = 0; i < poolSize; i++)
         {
@@ -84,5 +84,6 @@ public class EnemySpawner : MonoBehaviour
         {
             enemy.SetActive(false);
         }
+        spawnTimer = 0f;
     }
 }
