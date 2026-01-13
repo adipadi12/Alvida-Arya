@@ -35,21 +35,26 @@ public class PlayerInteraction : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.E))
         {
-            Debug.DrawRay(transform.position, transform.forward * interactionRange, Color.black, 2f);
+            EForInteract();
+        }
+    }
 
-            if(Physics.Raycast(transform.position, 
-                               transform.forward, 
-                               out RaycastHit hitInfo, 
-                               interactionRange, 
-                               interactableLayerMask))
-            {
-                IInteractables interactables = hitInfo.collider.GetComponent<IInteractables>();
-                Debug.Log("Hit: " + hitInfo.collider.name);
-                
-                if(interactables != null)
-                {                    
-                    interactables.Interact(); 
-                }
+    public void EForInteract()
+    {
+        Debug.DrawRay(transform.position, transform.forward * interactionRange, Color.black, 2f);
+
+        if(Physics.Raycast(transform.position, 
+                            transform.forward, 
+                            out RaycastHit hitInfo, 
+                            interactionRange, 
+                            interactableLayerMask))
+        {
+            IInteractables interactables = hitInfo.collider.GetComponent<IInteractables>();
+            Debug.Log("Hit: " + hitInfo.collider.name);
+            
+            if(interactables != null)
+            {                    
+                interactables.Interact(); 
             }
         }
     }
