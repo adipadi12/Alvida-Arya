@@ -52,7 +52,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void SpawnEnemy()
+    private void SpawnEnemy() // spawns an enemy at a random position within the spawn radius
     {
         GameObject enemy = GetPooledEnemy();
         if (enemy == null)
